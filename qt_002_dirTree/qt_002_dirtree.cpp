@@ -8,8 +8,7 @@
 
 
 
-qt_002_dirTree::qt_002_dirTree(QString path, QWidget *parent)
-	: QMainWindow(parent)
+qt_002_dirTree::qt_002_dirTree(QString path, QWidget *parent) : QMainWindow(parent)
 {
 	ui.setupUi(this);
 
@@ -88,7 +87,6 @@ qt_002_dirTree::qt_002_dirTree(QString path, QWidget *parent)
 		"%Pos% = symbol from the initial file name, where\n"\
 		"\tPos is a position number in the file name, starting at 1\n"
 	);
-
 }
 
 qt_002_dirTree::~qt_002_dirTree()

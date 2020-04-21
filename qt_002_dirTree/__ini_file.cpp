@@ -103,13 +103,13 @@ std::string* ini_file::get_file_path(const char file)
 
 	switch (file)
 	{
-	case 'i':
-		res = &iniFileName;
-		break;
+		case 'i':
+			res = &iniFileName;
+			break;
 
-	case 'e':
-		res = &exeFileName;
-		break;
+		case 'e':
+			res = &exeFileName;
+			break;
 	}
 
 	return res;

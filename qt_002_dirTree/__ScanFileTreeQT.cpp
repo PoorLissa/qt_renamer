@@ -397,15 +397,21 @@ QString ScanFileTreeQT::lastPathFromFile()
 {
 	QString path = "";
     char ch[MAX_PATH];
-    std::ifstream inFile("_path");
 
-    while( inFile >> ch ) {
-		path += ch;
-        path += " ";	// wtf? но без этой строчки из пути исчезают все пробелы...
+	std::fstream inFile;
+
+	inFile.open("_path", std::fstream::in);
+
+	if (inFile.is_open())
+	{
+		while (inFile >> ch) {
+			path += ch;
+			path += " ";	// wtf? но без этой строчки из пути исчезают все пробелы...
+		}
+
+//		path = path.TrimRight();
+		inFile.close();
 	}
-
-    //path = path.TrimRight();
-    inFile.close();
 
     return path;
 }
@@ -432,12 +438,13 @@ void ScanFileTreeQT::setDirectory(QString path)
 		bool found = false;
 
 		// проходим по всем потомкам текущей ноды в дереве
-		for(int j = 0; j < currentNode->childCount(); j++) {
-
+		for(int j = 0; j < currentNode->childCount(); j++)
+		{
 			QString nodeName = currentNode->child(j)->text(0).toLower();
 
 			// если текст потомка равен текущей части пути (или содержит букву диска + ':'), проваливаемся на уровень глубже
-			if( path == nodeName || ( i == 0 && nodeName.contains(path) ) ) {
+			if( path == nodeName || ( i == 0 && nodeName.contains(path) ) )
+			{
 				found = true;
 				currentNode = currentNode->child(j);
 				break;

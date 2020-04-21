@@ -1,6 +1,22 @@
 #include "qt_002_dirtree.h"
 #include <QtWidgets/QApplication>
 
+
+
+void convert_from_MultiByte_to_WideChar(std::wstring &destStr, const char *src)
+{
+	setlocale(LC_ALL, "Russian");
+
+	const size_t maxSize = _MAX_PATH + 1;
+	size_t pReturnValue;
+	wchar_t dest[maxSize];
+
+	mbstowcs_s(&pReturnValue, dest, maxSize, src, strlen(src));
+	destStr = dest;
+
+	return;
+}
+
 int main(int argc, char *argv[])
 {
 	QString path("");
@@ -14,11 +30,13 @@ int main(int argc, char *argv[])
 		{
 			param = param.substr(6, param.length());
 
-			for(size_t i = 0; i < param.length(); i++)
-			{
-				if( param[i] != '"' )
-					path += static_cast<char>(param[i]);
-			}
+			std::wstring ws;
+			convert_from_MultiByte_to_WideChar(ws, param.c_str());
+
+			while (ws.back() == '"')
+				ws.erase(ws.length()-1);
+
+			path = QString::fromWCharArray(ws.c_str());
 
 			if( path[path.length()] != '\\' )
 				path += '\\';
