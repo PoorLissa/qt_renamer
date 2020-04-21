@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 		{
 			param = param.substr(6, param.length());
 
-			for(unsigned int i = 0; i < param.length(); i++)
+			for(size_t i = 0; i < param.length(); i++)
 			{
 				if( param[i] != '"' )
 					path += static_cast<char>(param[i]);

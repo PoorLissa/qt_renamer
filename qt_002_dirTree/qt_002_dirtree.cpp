@@ -7,6 +7,7 @@
 #define opt(num) ui.cb##num->checkState()
 
 
+
 qt_002_dirTree::qt_002_dirTree(QString path, QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -18,7 +19,11 @@ qt_002_dirTree::qt_002_dirTree(QString path, QWidget *parent)
 
 	tree  = new ScanFileTreeQT(ui.treeWidget, false);
 
+	// Set current directory: from file OR from command line parameter
 	tree->setLastDirectory(path);
+
+	// Read ini file
+	ini.read_ini_file();
 
 	this->setStyleSheet(
 		"QListView { background: #FFFFFF;" "font: 13px;" "}"
@@ -99,19 +104,24 @@ void qt_002_dirTree::on_pushButtonProcess_clicked()
 	// проверим, включена ли опция физического переименования
 	bool doRename = opt(0);
 
+
 	// получим список полных исходных имен файлов с путем, отмеченных в левой части таблицы
 	QStringList oldFilesList, newFilesList;
 	table->getCheckedFiles(oldFilesList, newFilesList);
 
-	if( oldFilesList.length() > 0 ) {
 
+	if( oldFilesList.length() > 0 )
+	{
 		// передадим списки в класс Renamer, который нам и сделает переименование, и затем применим к файлам все отмеченные преобразования
 		// в filesMap сохраним исходные имена файлов (будут храниться, пока мы не сменим директорию или принудительно не перечитаем содержимое директорий)
-		FileRenameQT Renamer(oldFilesList, newFilesList, &filesMap);
+		FileRenameQT Renamer(oldFilesList, newFilesList, &filesMap, &ini);
 
 
-		if( opt(1) ) {
-			opt(2) ? Renamer.firstSymbolOfEveryWordToUpperCase() : Renamer.firstSymbolOfEveryWordToUpperCase(false);
+		if( opt(1) )
+		{
+			opt(2) ? 
+				Renamer.firstSymbolOfEveryWordToUpperCase() :
+				Renamer.firstSymbolOfEveryWordToUpperCase(false);
 		}
 
 		// extension to upper
@@ -336,7 +346,7 @@ void qt_002_dirTree::on_pb_Undo_clicked()
 			newFilesList[pos] = iter.value();
 	}
 
-	FileRenameQT Renamer(oldFilesList, newFilesList, &filesMap);
+	FileRenameQT Renamer(oldFilesList, newFilesList, &filesMap, &ini);
 
 	int errCount = Renamer.Rename();
 	table->displayRenamedFiles(newFilesList, oldFilesList);

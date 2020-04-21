@@ -83,6 +83,9 @@
     <ClCompile Include="__mp3Tiger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="__ini_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qt_002_dirtree.h">
@@ -124,6 +127,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="__mp3Tiger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="__ini_file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,13 +6,15 @@
 #include <QObject>
 
 #include "__mp3Tiger.h"
+#include "__ini_file.h"
+
 
 
 class FileRenameQT {
 
 	public:
 	
-		FileRenameQT(QStringList&, QStringList&, QMap<QString, QString>*);
+		FileRenameQT(QStringList&, QStringList&, QMap<QString, QString>*, ini_file *);
 	   ~FileRenameQT();
 
 		int Rename();
@@ -53,6 +55,7 @@ class FileRenameQT {
 		QStringList				*oldFiles;												// указатель на старый список файлов
 		QStringList				*newFiles;												// указатель на новый список файлов
 		QMap<QString, QString>	*Map;													// указатель на ћап, в котором хранитс€ соответствие нового имени файла его изначальному имени дл€ undo
+		ini_file				*ini;
 
 };
 

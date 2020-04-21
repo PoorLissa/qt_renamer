@@ -2,39 +2,20 @@
 #include <QString>
 #include <QStringList>
 #include <QTreeWidget>
+#include <clocale>
 
 #include <time.h>
-
-#include <iostream>
-#include <fstream>
-#include <string>
 
 // -----------------------------------------------------------------------------------------------------------------------
 
 // макрос для прохода по всем файлам из списка
 #define LoopFiles for(int fileNo = 0; fileNo < newFiles->length(); fileNo++)
 
-static const char* shortWords[] = {
-	"a", "at", "am",
-	"by",
-	"for",
-	"in", "it", "is", "if",
-	"me", "my",
-	"not",
-	"on", "of", "off",
-	"this", "that", "those", "the",
-	"who", "we", "with",
-	"а",
-	"в",
-	"из",
-	"о",
-	"про"
-};
-
 // -----------------------------------------------------------------------------------------------------------------------
 
-FileRenameQT::FileRenameQT(QStringList& oldfiles, QStringList& newfiles, QMap<QString, QString>* map) : oldFiles(&oldfiles), newFiles(&newfiles), Map(map) {
-
+FileRenameQT::FileRenameQT(QStringList& oldfiles, QStringList& newfiles, QMap<QString, QString>* map, ini_file *iniFile)
+	: oldFiles(&oldfiles), newFiles(&newfiles), Map(map), ini(iniFile)
+{
 	// заполним новый список из старого именами файлов без пути
 	// соответственно, после вызова конструктора новый список заполнен исходными неизмененными файлами
 /*
@@ -48,10 +29,9 @@ FileRenameQT::FileRenameQT(QStringList& oldfiles, QStringList& newfiles, QMap<QS
 		newFiles->replace(i, (newFiles)->at(i).right( (newFiles)->at(i).length() - (newFiles)->at(i).lastIndexOf('\\') -1));
 }
 
-FileRenameQT::~FileRenameQT() {
-
+FileRenameQT::~FileRenameQT()
+{
 	;
-
 }
 // -----------------------------------------------------------------------------------------------------------------------
 
@@ -78,11 +58,13 @@ int FileRenameQT::Rename()
 				QString name = getFileName(newFile);
 				QString ext  = getFileExt(newFile);
 
-				int count = map_FilesExist.count(newName);
+				std::wstring newNameLower = name.toLower().toStdWString();
 
-				map_FilesExist[newName] = count ? map_FilesExist[newName] + 1 : 1;
+				int count = map_FilesExist.count(newNameLower);
 
-				name += "__" + QString::number(map_FilesExist[newName]) + ext;
+				map_FilesExist[newNameLower] = count ? map_FilesExist[newNameLower] + 1 : 1;
+
+				name += " __" + QString::number(map_FilesExist[newNameLower]) + ext;
 
 				newName = name.toStdWString();
 			}
@@ -179,8 +161,8 @@ void FileRenameQT::toUpperCase(int param)
 // если excludeSmallWords == true, то короткие слова из словарика начинаются с маленькой буквы
 void FileRenameQT::firstSymbolOfEveryWordToUpperCase(bool excludeSmallWords, const QString Delimiter)
 {
-	LoopFiles {
-
+	LoopFiles
+	{
 		QString str = getFileName((*newFiles)[fileNo].toLower());
 		QString ext = getFileExt( (*newFiles)[fileNo]);
 		QString word;
@@ -188,11 +170,12 @@ void FileRenameQT::firstSymbolOfEveryWordToUpperCase(bool excludeSmallWords, con
 		int		oldPos = 0, newPos, count = 0;
 
 		do {
+
 			newPos = str.indexOf(Delimiter, oldPos);		// ищем первое вхождение разделителя
 			word   = str.mid(oldPos, newPos - oldPos);		// вычленили отдельное слово
 
-			if( (word != Delimiter) && (word != "") ) {
-
+			if( (word != Delimiter) && (word != "") )
+			{
 				// находим первую подстроку, начинающуюся с буквы (первое слово в строке ("01 - Let it be.mp3") ):
 				// если это слово из списка коротких слов, его первая буква все равно должна быть заглавной (если excludeSmallWords == true)
 				// поэтому, если count равен 1, не даем слову начаться с маленькой буквы
@@ -203,7 +186,8 @@ void FileRenameQT::firstSymbolOfEveryWordToUpperCase(bool excludeSmallWords, con
 					count++;
 
 				// если excludeSmallWords == true, не повышаем первый символ для слов из списка коротких слов, за исключением самого первого встреченного слова
-				if( excludeSmallWords && count > 1 && isAShortWord(word) ) {
+				if( excludeSmallWords && count > 1 && isAShortWord(word) )
+				{
 					oldPos = newPos + 1;
 					continue;
 				}
@@ -214,7 +198,8 @@ void FileRenameQT::firstSymbolOfEveryWordToUpperCase(bool excludeSmallWords, con
 
 			oldPos = newPos + 1;
 
-		} while( newPos != std::string::npos );
+		}
+		while( newPos != std::string::npos );
 
 		(*newFiles)[fileNo] = str + ext;
 	}
@@ -731,13 +716,14 @@ QString FileRenameQT::getFileExt(QString str)
 
 	if( pos >= 0 )
 		return str.right(str.length() - pos);
-	else
-		return "";
+
+	return "";
 }
 // -----------------------------------------------------------------------------------------------------------------------
 
 // первый символ строки переводим в верхний регистр
-void FileRenameQT::firstSymbolToUpperCase(QString &str) {
+void FileRenameQT::firstSymbolToUpperCase(QString &str)
+{
 	str.replace(0, 1, str[0].toUpper());
 }
 // -----------------------------------------------------------------------------------------------------------------------
@@ -745,25 +731,36 @@ void FileRenameQT::firstSymbolToUpperCase(QString &str) {
 // входит ли слово в список коротких слов
 bool FileRenameQT::isAShortWord(QString str)
 {
-	bool res = false;
 	str = str.toLower();
+	iniData *data = &(ini->get_ini_data().front());
 
-	if( str == "в" )
-		return true;
+	auto checkWord = [&str](std::list<std::wstring> *list)
+	{
+		bool res = false;
 
-	for(int i = 0; i < sizeof(shortWords)/sizeof(shortWords[0]); i++) {
-		if( str == shortWords[i] ) {
-			res = true;
-			break;
+		for (auto iter = list->begin(); iter != list->end(); ++iter)
+		{
+			std::wstring wStr(*iter);
+
+			if (str.toStdWString() == wStr)
+			{
+				res = true;
+				break;
+			}
 		}
-	}
-		
-	return res;
+
+		return res;
+	};
+
+	auto listEn = &data->list_short_words_en;
+	auto listRu = &data->list_short_words_ru;
+
+	return checkWord(listEn) || checkWord(listRu);
 }
 // -----------------------------------------------------------------------------------------------------------------------
 
 // парсим дату, полученную из функции _ctime64 и возвращаем список, в котором по порядку идут год, месяц и день этой даты
-// дата приходит в постоянном виде типа "Mon Jul 16 02:03:55 1987\n\0", поэтому отдельные части в ней  всегда на тех же позициях
+// дата приходит в постоянном виде типа "Mon Jul 16 02:03:55 1987\n\0", поэтому отдельные части в ней всегда на тех же позициях
 QString FileRenameQT::parseDate(QString date, QString mask)
 {
 	QString Year, Month, Day, res = "";
@@ -771,8 +768,8 @@ QString FileRenameQT::parseDate(QString date, QString mask)
 	int count, Len = mask.length();
 	mask = mask.toLower();
 
-	if( date != "" ) {
-
+	if( date != "" )
+	{
 		// получим год
 		Year = date.mid(20, 4);
 
@@ -788,13 +785,13 @@ QString FileRenameQT::parseDate(QString date, QString mask)
 		Day = date.mid( 8, 2);
 
 		// запишем дату в соответствии с маской
-		for(int i = 0; i < Len; i++) {
-	
+		for(int i = 0; i < Len; i++)
+		{
 			char ch = mask.toStdWString().at(i);
 			count = 1;
 
-			switch( ch ) {
-		
+			switch( ch )
+			{
 				case 'y':
 					while( ++i < Len && mask.toStdWString().at(i) == ch )
 						count++;

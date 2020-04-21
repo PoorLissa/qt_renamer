@@ -2,6 +2,8 @@
 #define QT_002_DIRTREE_H
 
 #include <QtWidgets/QMainWindow>
+#include <QListWidget>
+#include <QListWidgetItem>
 #include "ui_qt_002_dirtree.h"
 
 #include "__ScanFileTreeQT.h"
@@ -9,9 +11,8 @@
 #include "__FileTableManageQT.h"
 #include "__FileRenameQT.h"
 #include "__bitSet.h"
+#include "__ini_file.h"
 
-#include <QListWidget>
-#include <QListWidgetItem>
 
 
 class qt_002_dirTree : public QMainWindow
@@ -20,7 +21,7 @@ class qt_002_dirTree : public QMainWindow
 
  public:
 	qt_002_dirTree(QString path, QWidget *parent = 0);
-	~qt_002_dirTree();
+   ~qt_002_dirTree();
 
  private:
 	Ui::qt_002_dirTreeClass ui;
@@ -29,6 +30,8 @@ class qt_002_dirTree : public QMainWindow
 
 	QStringList				filesList;		// список файлов в директории
 	QMap<QString, QString>	filesMap;		// map для хранения исходных имен файлов
+
+	ini_file				ini;
 
  public slots:
 	void TreeItemSelectionChanged();

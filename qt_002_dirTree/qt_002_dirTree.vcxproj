@@ -34,10 +34,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -184,6 +186,7 @@
     <ClCompile Include="__FileListManage.cpp" />
     <ClCompile Include="__FileRenameQT.cpp" />
     <ClCompile Include="__FileTableManageQT.cpp" />
+    <ClCompile Include="__ini_file.cpp" />
     <ClCompile Include="__mp3Tiger.cpp" />
     <ClCompile Include="__ScanFileTreeQT.cpp" />
   </ItemGroup>
@@ -311,6 +314,7 @@
     </CustomBuild>
     <ClInclude Include="__bitSet.h" />
     <ClInclude Include="__FileRenameQT.h" />
+    <ClInclude Include="__ini_file.h" />
     <ClInclude Include="__mp3Tiger.h" />
     <ClInclude Include="__Rename.h" />
     <ClInclude Include="__ScanFolder.h" />
