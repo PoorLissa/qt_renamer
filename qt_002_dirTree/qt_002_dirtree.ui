@@ -1,0 +1,1183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>qt_002_dirTreeClass</class>
+ <widget class="QMainWindow" name="qt_002_dirTreeClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>997</width>
+    <height>621</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>qt_002_dirTree</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,2">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QTreeWidget" name="treeWidget">
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustIgnored</enum>
+        </property>
+        <property name="horizontalScrollMode">
+         <enum>QAbstractItemView::ScrollPerItem</enum>
+        </property>
+        <property name="uniformRowHeights">
+         <bool>false</bool>
+        </property>
+        <property name="sortingEnabled">
+         <bool>false</bool>
+        </property>
+        <attribute name="headerDefaultSectionSize">
+         <number>100</number>
+        </attribute>
+        <attribute name="headerMinimumSectionSize">
+         <number>31</number>
+        </attribute>
+        <attribute name="headerShowSortIndicator" stdset="0">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="headerStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string notr="true">1</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="5,3">
+        <property name="spacing">
+         <number>1</number>
+        </property>
+        <item>
+         <widget class="QTableWidget" name="tableWidget"/>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>250</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>250</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>1</number>
+             </property>
+             <item>
+              <widget class="QFrame" name="frame">
+               <property name="minimumSize">
+                <size>
+                 <width>120</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>120</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_3" columnstretch="0">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <property name="horizontalSpacing">
+                 <number>0</number>
+                </property>
+                <property name="verticalSpacing">
+                 <number>1</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="checkBoxSelAll">
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QCheckBox { padding: 5px; padding-left: 10px; }</string>
+                  </property>
+                  <property name="text">
+                   <string>Select All</string>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>16</width>
+                    <height>16</height>
+                   </size>
+                  </property>
+                  <property name="tristate">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QPushButton" name="reReadPushButton">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton { height: 23px;  }</string>
+                  </property>
+                  <property name="text">
+                   <string>reRead</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="10" column="0">
+                 <widget class="QListWidget" name="listWidgetExtensions"/>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QPushButton" name="pushButtonProcess">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton { height: 50px;  }</string>
+                  </property>
+                  <property name="text">
+                   <string>process files</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="9" column="0">
+                 <widget class="QCheckBox" name="cb0">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QPushButton" name="pb_Undo">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton { height: 20px;  }</string>
+                  </property>
+                  <property name="text">
+                   <string>Undo All</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTabWidget" name="tabWidget">
+               <property name="currentIndex">
+                <number>2</number>
+               </property>
+               <widget class="QWidget" name="tab">
+                <attribute name="title">
+                 <string>Tab 1</string>
+                </attribute>
+                <widget class="QWidget" name="layoutWidget">
+                 <property name="geometry">
+                  <rect>
+                   <x>9</x>
+                   <y>3</y>
+                   <width>486</width>
+                   <height>214</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_2">
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_3">
+                    <item>
+                     <widget class="QCheckBox" name="cb1">
+                      <property name="text">
+                       <string>The First Symbol Of Every Word To Upper Case</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QCheckBox" name="cb2">
+                      <property name="text">
+                       <string>But skip short words (in, the, a, of)</string>
+                      </property>
+                      <property name="checked">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="cb6">
+                    <property name="text">
+                     <string>File name to lower case (filename.*)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="cb4">
+                    <property name="text">
+                     <string>Extension to lower case (*.jpg)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="cb5">
+                    <property name="text">
+                     <string>File name to upper case (FILENAME.*)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="cb3">
+                    <property name="text">
+                     <string>Extension to upper case (*.JPG)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="cb7">
+                    <property name="text">
+                     <string>Trim spaces (&quot;   filename.txt  &quot; =&gt; &quot;filename.txt&quot;)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="cb8">
+                    <property name="text">
+                     <string>Delete all non-letter symbols in the beginning of the file (&quot;_ file.txt&quot; =&gt; &quot;file.txt&quot;)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="cb20">
+                    <property name="text">
+                     <string>Prepend all Capital Letters with Space Symbol</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="cb9">
+                    <property name="text">
+                     <string>Insert Space delimeter between letters and non-letters (&quot;10Filename.txt&quot; =&gt; &quot;10 Filename.txt&quot;)</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+               <widget class="QWidget" name="tab_2">
+                <attribute name="title">
+                 <string>Tab 2</string>
+                </attribute>
+                <widget class="QCheckBox" name="cb10">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>13</y>
+                   <width>118</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>130</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Replace in Filename</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_01">
+                 <property name="geometry">
+                  <rect>
+                   <x>125</x>
+                   <y>12</y>
+                   <width>75</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>75</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>75</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label">
+                 <property name="geometry">
+                  <rect>
+                   <x>206</x>
+                   <y>12</y>
+                   <width>23</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>23</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>23</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="baseSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>with</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_02">
+                 <property name="geometry">
+                  <rect>
+                   <x>235</x>
+                   <y>12</y>
+                   <width>75</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>75</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>75</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_01">
+                 <property name="geometry">
+                  <rect>
+                   <x>316</x>
+                   <y>12</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>1111</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb11">
+                 <property name="geometry">
+                  <rect>
+                   <x>402</x>
+                   <y>13</y>
+                   <width>127</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Starting at the end</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_03">
+                 <property name="geometry">
+                  <rect>
+                   <x>125</x>
+                   <y>40</y>
+                   <width>75</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>75</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>75</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>206</x>
+                   <y>40</y>
+                   <width>23</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>23</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>23</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="baseSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>with</string>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb13">
+                 <property name="geometry">
+                  <rect>
+                   <x>402</x>
+                   <y>41</y>
+                   <width>127</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Starting at the end</string>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_02">
+                 <property name="geometry">
+                  <rect>
+                   <x>316</x>
+                   <y>40</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>1111</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb12">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>41</y>
+                   <width>118</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>118</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Replace in Extension</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_04">
+                 <property name="geometry">
+                  <rect>
+                   <x>235</x>
+                   <y>40</y>
+                   <width>75</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>75</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>75</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_4">
+                 <property name="geometry">
+                  <rect>
+                   <x>363</x>
+                   <y>40</y>
+                   <width>33</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>33</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>33</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>times</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_2">
+                 <property name="geometry">
+                  <rect>
+                   <x>363</x>
+                   <y>12</y>
+                   <width>33</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>33</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>33</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>times</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_07">
+                 <property name="geometry">
+                  <rect>
+                   <x>61</x>
+                   <y>171</y>
+                   <width>110</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb21">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>172</y>
+                   <width>53</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Insert</string>
+                 </property>
+                </widget>
+                <widget class="QRadioButton" name="rb_006">
+                 <property name="geometry">
+                  <rect>
+                   <x>179</x>
+                   <y>194</y>
+                   <width>75</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>using mask</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_10">
+                 <property name="geometry">
+                  <rect>
+                   <x>271</x>
+                   <y>193</y>
+                   <width>110</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string/>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_07">
+                 <property name="geometry">
+                  <rect>
+                   <x>402</x>
+                   <y>193</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_8">
+                 <property name="geometry">
+                  <rect>
+                   <x>449</x>
+                   <y>193</y>
+                   <width>25</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>times</string>
+                 </property>
+                </widget>
+                <widget class="QRadioButton" name="rb_005">
+                 <property name="geometry">
+                  <rect>
+                   <x>179</x>
+                   <y>172</y>
+                   <width>86</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>at position of</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_09">
+                 <property name="geometry">
+                  <rect>
+                   <x>271</x>
+                   <y>171</y>
+                   <width>110</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb27">
+                 <property name="geometry">
+                  <rect>
+                   <x>402</x>
+                   <y>172</y>
+                   <width>108</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>insert at the back</string>
+                 </property>
+                </widget>
+                <widget class="QRadioButton" name="rb_004">
+                 <property name="geometry">
+                  <rect>
+                   <x>179</x>
+                   <y>150</y>
+                   <width>73</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>at position</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_05">
+                 <property name="geometry">
+                  <rect>
+                   <x>271</x>
+                   <y>149</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb22">
+                 <property name="geometry">
+                  <rect>
+                   <x>402</x>
+                   <y>150</y>
+                   <width>115</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Starting at the end</string>
+                 </property>
+                </widget>
+                <widget class="QComboBox" name="comboBox_01">
+                 <property name="geometry">
+                  <rect>
+                   <x>235</x>
+                   <y>66</y>
+                   <width>103</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>At the beginning</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>At the end</string>
+                  </property>
+                 </item>
+                </widget>
+                <widget class="QCheckBox" name="cb14">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>67</y>
+                   <width>55</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Delete</string>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_03">
+                 <property name="geometry">
+                  <rect>
+                   <x>125</x>
+                   <y>66</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_5">
+                 <property name="geometry">
+                  <rect>
+                   <x>168</x>
+                   <y>66</y>
+                   <width>38</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>symbols</string>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb15">
+                 <property name="geometry">
+                  <rect>
+                   <x>356</x>
+                   <y>67</y>
+                   <width>111</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Starting at position</string>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_04">
+                 <property name="geometry">
+                  <rect>
+                   <x>472</x>
+                   <y>66</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_06">
+                 <property name="geometry">
+                  <rect>
+                   <x>160</x>
+                   <y>121</y>
+                   <width>75</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>75</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>75</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb17">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>122</y>
+                   <width>152</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Remove all symbols before</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_7">
+                 <property name="geometry">
+                  <rect>
+                   <x>241</x>
+                   <y>121</y>
+                   <width>38</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>is found</string>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb19">
+                 <property name="geometry">
+                  <rect>
+                   <x>297</x>
+                   <y>122</y>
+                   <width>94</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Including delim</string>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb18">
+                 <property name="geometry">
+                  <rect>
+                   <x>402</x>
+                   <y>122</y>
+                   <width>115</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Starting at the end</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_05">
+                 <property name="geometry">
+                  <rect>
+                   <x>125</x>
+                   <y>93</y>
+                   <width>75</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>75</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>75</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb16">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>94</y>
+                   <width>122</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Reduce sequence of</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_6">
+                 <property name="geometry">
+                  <rect>
+                   <x>208</x>
+                   <y>93</y>
+                   <width>63</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>to single item</string>
+                 </property>
+                </widget>
+               </widget>
+               <widget class="QWidget" name="tab_3">
+                <attribute name="title">
+                 <string>Tab 3</string>
+                </attribute>
+                <widget class="QCheckBox" name="cb26">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>70</y>
+                   <width>71</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>mp3 tags</string>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb28">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>94</y>
+                   <width>136</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Rename using template</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_11">
+                 <property name="geometry">
+                  <rect>
+                   <x>144</x>
+                   <y>93</y>
+                   <width>110</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_08">
+                 <property name="geometry">
+                  <rect>
+                   <x>260</x>
+                   <y>93</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb24">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>32</y>
+                   <width>91</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Insert date of</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_08">
+                 <property name="geometry">
+                  <rect>
+                   <x>185</x>
+                   <y>31</y>
+                   <width>110</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>yyyy.mm.dd - </string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_9">
+                 <property name="geometry">
+                  <rect>
+                   <x>301</x>
+                   <y>33</y>
+                   <width>50</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>at position</string>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_06">
+                 <property name="geometry">
+                  <rect>
+                   <x>357</x>
+                   <y>31</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb25">
+                 <property name="geometry">
+                  <rect>
+                   <x>404</x>
+                   <y>32</y>
+                   <width>115</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Starting at the end</string>
+                 </property>
+                </widget>
+                <widget class="QRadioButton" name="rb_001">
+                 <property name="geometry">
+                  <rect>
+                   <x>100</x>
+                   <y>14</y>
+                   <width>64</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Creation</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+                <widget class="QRadioButton" name="rb_002">
+                 <property name="geometry">
+                  <rect>
+                   <x>100</x>
+                   <y>32</y>
+                   <width>68</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Changing</string>
+                 </property>
+                </widget>
+                <widget class="QRadioButton" name="rb_003">
+                 <property name="geometry">
+                  <rect>
+                   <x>100</x>
+                   <y>50</y>
+                   <width>78</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Last access</string>
+                 </property>
+                </widget>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>997</width>
+     <height>18</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="qt_002_dirtree.qrc"/>
+ </resources>
+ <connections/>
+</ui>

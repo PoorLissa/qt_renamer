@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/qt_002_dirTree">
+        <file>images/checkBox-unchecked.png</file>
+        <file>images/checkBox-checked.png</file>
+        <file>images/treeBranch-closed.png</file>
+        <file>images/treeBranch-open.png</file>
+    </qresource>
+</RCC>
