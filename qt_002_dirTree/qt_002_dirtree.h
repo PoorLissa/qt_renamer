@@ -19,7 +19,7 @@ class qt_002_dirTree : public QMainWindow
 	Q_OBJECT
 
  public:
-	qt_002_dirTree(QWidget *parent = 0);
+	qt_002_dirTree(QString path, QWidget *parent = 0);
 	~qt_002_dirTree();
 
  private:

@@ -7,7 +7,7 @@
 #define opt(num) ui.cb##num->checkState()
 
 
-qt_002_dirTree::qt_002_dirTree(QWidget *parent)
+qt_002_dirTree::qt_002_dirTree(QString path, QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -17,7 +17,8 @@ qt_002_dirTree::qt_002_dirTree(QWidget *parent)
 	table = new FileTableManageQT(ui.tableWidget);
 
 	tree  = new ScanFileTreeQT(ui.treeWidget, false);
-	tree->setLastDirectory();
+
+	tree->setLastDirectory(path);
 
 	this->setStyleSheet(
 		"QListView { background: #FFFFFF;" "font: 13px;" "}"
@@ -240,8 +241,11 @@ void qt_002_dirTree::on_pushButtonProcess_clicked()
 		// запускаем фактическое переименование или просто отображаем файлы в таблице
 		if( doRename ) {
 
-			Renamer.Rename();
+			int errCount = Renamer.Rename();
 			table->displayRenamedFiles(newFilesList, oldFilesList);
+
+			if (errCount)
+				QMessageBox::information(ui.centralWidget, "Ahtung!", QString::number(errCount) + "files were NOT renamed :'(");
 		}
 		else {
 

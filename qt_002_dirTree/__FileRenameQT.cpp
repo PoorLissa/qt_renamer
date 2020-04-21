@@ -9,6 +9,7 @@
 #include <fstream>
 #include <string>
 
+// -----------------------------------------------------------------------------------------------------------------------
 
 // макрос для прохода по всем файлам из списка
 #define LoopFiles for(int fileNo = 0; fileNo < newFiles->length(); fileNo++)
@@ -30,15 +31,17 @@ static const char* shortWords[] = {
 	"про"
 };
 
+// -----------------------------------------------------------------------------------------------------------------------
+
 FileRenameQT::FileRenameQT(QStringList& oldfiles, QStringList& newfiles, QMap<QString, QString>* map) : oldFiles(&oldfiles), newFiles(&newfiles), Map(map) {
 
 	// заполним новый список из старого именами файлов без пути
 	// соответственно, после вызова конструктора новый список заполнен исходными неизмененными файлами
-	/*
+/*
 	newFiles->reserve(oldFiles->length());
 	for(int i = 0; i < oldFiles->length(); i++)
 		newFiles->push_back( (oldFiles)->at(i).right( (oldFiles)->at(i).length() - (oldFiles)->at(i).lastIndexOf('\\') -1) );
-	*/
+*/
 
 	// в новом списке отрезаем пути, оставляя только имена файлов
 	for(int i = 0; i < newFiles->length(); i++)
@@ -47,38 +50,60 @@ FileRenameQT::FileRenameQT(QStringList& oldfiles, QStringList& newfiles, QMap<QS
 
 FileRenameQT::~FileRenameQT() {
 
+	;
+
 }
-// ---------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------
 
 // реальное переименование файлов
 int FileRenameQT::Rename()
 {
 	int errCount = 0;
+	QMap<std::wstring, int> map_FilesExist;
 
-	for(int i = 0; i < oldFiles->length(); i++) {
-	
-		QString file = oldFiles->at(i);
-		QString path = file.left( file.lastIndexOf('\\') + 1);
+	for(int i = 0; i < oldFiles->length(); i++)
+	{
+		QString oldFile	= oldFiles->at(i);
+		QString path	= oldFile.left( oldFile.lastIndexOf('\\') + 1);
+		QString newFile = path + newFiles->at(i);
 
-		if( file != path + newFiles->at(i) ) {
+		if( oldFile != newFile )
+		{
+			std::wstring oldName = oldFile.toStdWString();
+			std::wstring newName = newFile.toStdWString();
+
+			// If the file already exists, we need to add some unique postfix to it
+			if( isFileExist(newFile) )
+			{
+				QString name = getFileName(newFile);
+				QString ext  = getFileExt(newFile);
+
+				int count = map_FilesExist.count(newName);
+
+				map_FilesExist[newName] = count ? map_FilesExist[newName] + 1 : 1;
+
+				name += "__" + QString::number(map_FilesExist[newName]) + ext;
+
+				newName = name.toStdWString();
+			}
 
 			// rename не захотела переименовывать файлы с кириллицей, так что заменил на _wrename
-			if( !_wrename(file.toStdWString().data(), (path + newFiles->at(i)).toStdWString().data()) ) {
-		
+			if( !_wrename(oldName.data(), newName.data()) )
+			{
 				// если файл успешно переименовался, найдем в Map его исходное имя, удалим старый ключ и создадим новый,
 				// где key - новое имя, а value - исходное имя файла до переименования
 				// можно было бы делать наоборот, но поиск по key быстрый, а по value - слишком медленный
-				QString oldName = Map->value(file);
-				Map->remove(file);
+				QString oldName = Map->value(oldFile);
+				Map->remove(oldFile);
 				//Map->insert(oldName, path + newFiles->at(i));
 				Map->insert(path + newFiles->at(i), oldName);
 
 				// также заменяем в старом списке исходное имя файла на новое
-				oldFiles->replace(i, path + newFiles->at(i));
+				oldFiles->replace(i, newFile);
 			}
-			else {
-
-				newFiles->replace(i, file.right( file.length() - file.lastIndexOf('\\') - 1));
+			else
+			{
+				newFiles->replace(i, oldFile.right( oldFile.length() - oldFile.lastIndexOf('\\') - 1));
 				errCount++;
 			}
 		}
@@ -86,26 +111,27 @@ int FileRenameQT::Rename()
 
 	return errCount;
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // понижаем регистр: 0 (default) - всего файла, 1 - имени файла, 2 - расширения файла
 void FileRenameQT::toLowerCase(int param)
 {
 	QString str1, str2;
 
-	LoopFiles {
-
+	LoopFiles
+	{
 		str1 = getFileName((*newFiles)[fileNo]);
 		str2 = getFileExt( (*newFiles)[fileNo]);
 
-		switch(param) {
-		
+		switch(param)
+		{
 			case 1:
 				str1 = str1.toLower();
-			break;
+				break;
 
 			case 2:
 				str2 = str2.toLower();
-			break;
+				break;
 
 			default:
 				str1 = str1.toLower();
@@ -114,7 +140,10 @@ void FileRenameQT::toLowerCase(int param)
 
 		(*newFiles)[fileNo] = str1 + str2;
 	}
+
+	return;
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // повышаем регистр: 0 (default) - всего файла, 1 - имени файла, 2 - расширения файла
 void FileRenameQT::toUpperCase(int param)
@@ -144,6 +173,7 @@ void FileRenameQT::toUpperCase(int param)
 		(*newFiles)[fileNo] = str1 + str2;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // каждое новое слово начинается с заглавной буквы
 // если excludeSmallWords == true, то короткие слова из словарика начинаются с маленькой буквы
@@ -189,6 +219,7 @@ void FileRenameQT::firstSymbolOfEveryWordToUpperCase(bool excludeSmallWords, con
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // удалить пробелы до и после имени файла
 void FileRenameQT::trimSpaces()
@@ -200,6 +231,7 @@ void FileRenameQT::trimSpaces()
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // удалить все небуквенные символы в начале имени файла
 void FileRenameQT::deleteNonLettersFromTheStart()
@@ -217,6 +249,7 @@ void FileRenameQT::deleteNonLettersFromTheStart()
 		}
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // вставить разделитель между буквами и не-буквами (исключая)
 void FileRenameQT::delimBetweenLettersAndNonLetters()
@@ -248,6 +281,7 @@ void FileRenameQT::delimBetweenLettersAndNonLetters()
 		}
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // заменить подстроку на другую подстроку указанное количество раз (0 - заменить все вхождения), начиная слева или справа
 void FileRenameQT::replaceSubstring(const QString from, const QString to, const int count, const bool fromRight, const bool fileName)
@@ -281,6 +315,7 @@ void FileRenameQT::replaceSubstring(const QString from, const QString to, const 
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // удалить указанное количество символов в начале или в конце строки, начиная с указанной позиции
 void FileRenameQT::deleteSomeSymbols(const int count, const bool left, const int pos)
@@ -297,6 +332,7 @@ void FileRenameQT::deleteSomeSymbols(const int count, const bool left, const int
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // заменить последовательность символов/строк на одну такую строку ("a___a" => "a_a")
 void FileRenameQT::sequenceToSingle(const QString sample)
@@ -313,6 +349,7 @@ void FileRenameQT::sequenceToSingle(const QString sample)
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // удалить все символы, пока не будет встречен указанный символ
 void FileRenameQT::deleteSymbolsBeforeDelim(const QString delim, bool includeDelim, bool fromLeft)
@@ -351,6 +388,7 @@ void FileRenameQT::deleteSymbolsBeforeDelim(const QString delim, bool includeDel
 		}
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // предварить все заглавные буквы пробелом (кроме первой)
 void FileRenameQT::isolateCapitalLetters()
@@ -376,6 +414,7 @@ void FileRenameQT::isolateCapitalLetters()
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // вставить подстроку в указанную позицию (опционально, начиная справа)
 void FileRenameQT::insertAt(const QString data, int pos, bool fromRight)
@@ -393,6 +432,7 @@ void FileRenameQT::insertAt(const QString data, int pos, bool fromRight)
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // вставить подстроку перед/после указанной подстроки (один раз)
 void FileRenameQT::insertAtSubstring(const QString data, const QString substr, bool insertAfter)
@@ -415,6 +455,7 @@ void FileRenameQT::insertAtSubstring(const QString data, const QString substr, b
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // вставить подстроку по маске (например, %d?%b = вставить новую подстроку между цифрой и маленькой буквой)
 void FileRenameQT::insertByMask(const QString data, QString mask, int Count)
@@ -529,6 +570,7 @@ void FileRenameQT::insertByMask(const QString data, QString mask, int Count)
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // вставить в имя файла дату создания/записи/доступа/изменения
 void FileRenameQT::insertAttrDate(QString mask, int Button, int pos, bool fromRight)
@@ -565,7 +607,9 @@ void FileRenameQT::insertAttrDate(QString mask, int Button, int pos, bool fromRi
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
+// ???
 void FileRenameQT::mp3Tag()
 {
 	LoopFiles {
@@ -587,6 +631,7 @@ void FileRenameQT::mp3Tag()
 		(*newFiles)[fileNo] = str + ext;
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // переименовать, используя шаблон: * заменяется на исходное имя файла, # заменяется на порядковый номер, %1% заменяется на первый символ
 void FileRenameQT::renByTemplate(const QString mask, const int startingNo)
@@ -670,13 +715,14 @@ void FileRenameQT::renByTemplate(const QString mask, const int startingNo)
 			(*newFiles)[fileNo] = Mask + ext;
 	}
 }
-// --------------------- PRIVATE METHODS ----------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------
 
 // получить имя файла без расширения
 QString FileRenameQT::getFileName(QString str)
 {
 	return str.left(str.lastIndexOf('.'));
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // получить расширение без имени файла
 QString FileRenameQT::getFileExt(QString str)
@@ -688,11 +734,13 @@ QString FileRenameQT::getFileExt(QString str)
 	else
 		return "";
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // первый символ строки переводим в верхний регистр
 void FileRenameQT::firstSymbolToUpperCase(QString &str) {
 	str.replace(0, 1, str[0].toUpper());
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // входит ли слово в список коротких слов
 bool FileRenameQT::isAShortWord(QString str)
@@ -712,6 +760,7 @@ bool FileRenameQT::isAShortWord(QString str)
 		
 	return res;
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // парсим дату, полученную из функции _ctime64 и возвращаем список, в котором по порядку идут год, месяц и день этой даты
 // дата приходит в постоянном виде типа "Mon Jul 16 02:03:55 1987\n\0", поэтому отдельные части в ней  всегда на тех же позициях
@@ -789,5 +838,14 @@ QString FileRenameQT::parseDate(QString date, QString mask)
 
 	return res;
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "__ScanFolder.h"
+
+// Проверяем, существует ли файл
+bool FileRenameQT::isFileExist(QString path)
+{
+	LPCWSTR Path = (const wchar_t*)path.utf16();
+	return GetFileAttributes(Path) != INVALID_FILE_ATTRIBUTES;
+}
+// -----------------------------------------------------------------------------------------------------------------------

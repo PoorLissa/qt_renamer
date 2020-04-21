@@ -378,9 +378,16 @@ void ScanFileTreeQT::lastPathToFile()
 {
 	QList<QTreeWidgetItem*> currentNodeList = Tree->selectedItems();
 
-	if( currentNodeList.length() > 0 ) {
+	if( currentNodeList.length() > 0 ) 
+	{
+		char ch[MAX_PATH];
+		GetModuleFileNameA(NULL, ch, MAX_PATH);
+
+		std::string fileName(ch);
+		fileName = fileName.substr(0, fileName.find_last_of('\\')+1) + "_path";
+
 		QString path = getPath(currentNodeList[0]);
-		std::ofstream outFile("_path");
+		std::ofstream outFile(fileName);
 		outFile << path.toStdString().data();
 		outFile.close();
 	}
@@ -403,9 +410,12 @@ QString ScanFileTreeQT::lastPathFromFile()
     return path;
 }
 
-void ScanFileTreeQT::setLastDirectory()
+void ScanFileTreeQT::setLastDirectory(QString path)
 {
-	setDirectory(lastPathFromFile());
+	if (path.isEmpty())
+		setDirectory(lastPathFromFile());
+	else
+		setDirectory(path);
 }
 
 // открываем в дереве последнюю папку из прошлой сессии
