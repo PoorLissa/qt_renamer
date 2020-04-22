@@ -55,18 +55,22 @@ int FileRenameQT::Rename()
 			// If the file already exists, we need to add some unique postfix to it
 			if( isFileExist(newFile) )
 			{
-				QString name = getFileName(newFile);
-				QString ext  = getFileExt(newFile);
+				// But if the oldname and newname are the same when converted to lowercase, we assume the file is being renamed (lAlAlA --> Lalala)
+				if( oldFile.toLower() != newFile.toLower() )
+				{
+					QString name = getFileName(newFile);
+					QString ext = getFileExt(newFile);
 
-				std::wstring newNameLower = name.toLower().toStdWString();
+					std::wstring newNameLower = name.toLower().toStdWString();
 
-				int count = map_FilesExist.count(newNameLower);
+					int count = map_FilesExist.count(newNameLower);
 
-				map_FilesExist[newNameLower] = count ? map_FilesExist[newNameLower] + 1 : 1;
+					map_FilesExist[newNameLower] = count ? map_FilesExist[newNameLower] + 1 : 1;
 
-				name += " __" + QString::number(map_FilesExist[newNameLower]) + ext;
+					name += " __" + QString::number(map_FilesExist[newNameLower]) + ext;
 
-				newName = name.toStdWString();
+					newName = name.toStdWString();
+				}
 			}
 
 			// rename не захотела переименовывать файлы с кириллицей, так что заменил на _wrename
