@@ -161,6 +161,12 @@
                 </property>
                 <item row="0" column="0">
                  <widget class="QCheckBox" name="checkBoxSelAll">
+                  <property name="baseSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="layoutDirection">
                    <enum>Qt::LeftToRight</enum>
                   </property>
@@ -203,7 +209,7 @@
                    <string notr="true">QPushButton { height: 50px;  }</string>
                   </property>
                   <property name="text">
-                   <string>process files</string>
+                   <string>Process</string>
                   </property>
                  </widget>
                 </item>
@@ -230,11 +236,29 @@
              <item>
               <widget class="QTabWidget" name="tabWidget">
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
+               <widget class="QWidget" name="tab_4">
+                <attribute name="title">
+                 <string>Options</string>
+                </attribute>
+                <widget class="QCheckBox" name="cb_dirs">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>20</y>
+                   <width>111</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Include Directories</string>
+                 </property>
+                </widget>
+               </widget>
                <widget class="QWidget" name="tab">
                 <attribute name="title">
-                 <string>Tab 1</string>
+                 <string>Rules 1</string>
                 </attribute>
                 <widget class="QWidget" name="layoutWidget">
                  <property name="geometry">
@@ -328,7 +352,7 @@
                </widget>
                <widget class="QWidget" name="tab_2">
                 <attribute name="title">
-                 <string>Tab 2</string>
+                 <string>Rules 2</string>
                 </attribute>
                 <widget class="QCheckBox" name="cb10">
                  <property name="geometry">
@@ -992,7 +1016,7 @@
                </widget>
                <widget class="QWidget" name="tab_3">
                 <attribute name="title">
-                 <string>Tab 3</string>
+                 <string>Rules 3</string>
                 </attribute>
                 <widget class="QCheckBox" name="cb26">
                  <property name="geometry">

@@ -17,6 +17,7 @@
 
 ScanFileTreeQT::ScanFileTreeQT(QTreeWidget *TreeViewObj, bool sMode) : Tree(TreeViewObj), FastSearch(sMode)
 {
+	// Customly connected slots/signals
 	connect(Tree, SIGNAL(itemExpanded (QTreeWidgetItem*)), this, SLOT(itemExpanded (QTreeWidgetItem*)));
 	connect(Tree, SIGNAL(itemCollapsed(QTreeWidgetItem*)), this, SLOT(itemCollapsed(QTreeWidgetItem*)));
 
@@ -124,7 +125,8 @@ void ScanFileTreeQT::ScanHardDrives()
 		WCHAR fileSystem[80], volumeName[80];
 		unsigned long p1 = 80;
 
-		while (*DrivePointer != 0) {
+		while (*DrivePointer != 0)
+		{
 			Drive = QString::fromStdWString(DrivePointer);
 			int driveType = GetDriveType(DrivePointer);
 
@@ -145,8 +147,8 @@ void ScanFileTreeQT::ScanHardDrives()
 void ScanFileTreeQT::BuildTree(QTreeWidgetItem *Node, const QString Path, const QString volumeName = "")
 {
 	// включение корневых каталогов в дерево
-	if (Node == NULL) {
-
+	if (Node == NULL)
+	{
 		QTreeWidgetItem *upperLevelNode = new QTreeWidgetItem(Tree);
 
 		upperLevelNode->setText(0, volumeName + " (" + Path.section('\\', 0, 0) + ")");
@@ -170,7 +172,7 @@ void ScanFileTreeQT::BuildTree(QTreeWidgetItem *Node, const QString Path, const 
 		nodePath = QString::fromWCharArray(SF);
 		int attr;
 
-		if ((nodePath != ".") && (nodePath != ".."))
+		if ( nodePath != "." && nodePath != ".." )
 		{
 			// добавление директорий
 			if (pathIsDirectory(Path + nodePath, attr))
@@ -178,11 +180,7 @@ void ScanFileTreeQT::BuildTree(QTreeWidgetItem *Node, const QString Path, const 
 				QTreeWidgetItem *newNode = new QTreeWidgetItem();
 
 				newNode->setText(0, nodePath);
-
-				if( attr == ATTR_HIDDEN )
-					newNode->setIcon(0, *hiddenDirIcon);
-				else
-					newNode->setIcon(0, *normalDirIcon);
+				newNode->setIcon(0, attr == ATTR_HIDDEN ? *hiddenDirIcon : *normalDirIcon);
 
 				newNode->setExpanded(false);
 				newNode->setSizeHint(0, QSize(0, 30));
@@ -212,7 +210,7 @@ void ScanFileTreeQT::BuildTree(QTreeWidgetItem *Node, const QString Path, const 
 					{
 						QString innerPath = QString::fromWCharArray(SF);
 
-						if ((innerPath != ".") && (innerPath != ".."))
+						if ( innerPath != "." && innerPath != ".." )
 						{
 							if (pathIsDirectory(path + "\\" + innerPath, attr))
 							{
@@ -316,7 +314,7 @@ QString ScanFileTreeQT::getCurrNodeName()
 }
 
 // заполняем предоставленный список файлами, находящимися в выбранных директориях
-void ScanFileTreeQT::getFileList(QStringList& list, qMapSS& filesMap, qMapSC& ExtensionsMap)
+void ScanFileTreeQT::getFileList(QStringList& list, qMapSS& filesMap, qMapSC& ExtensionsMap, const dirTreeOptions &dtOpt)
 {
 	list.clear();
 	filesMap.clear();
@@ -325,41 +323,51 @@ void ScanFileTreeQT::getFileList(QStringList& list, qMapSS& filesMap, qMapSC& Ex
 
 	// проходим по всем нодам, для каждой ноды получаем список файлов и добавляем его в наш список
 	for(int i = 0; i < Nodes.length(); i++)
-		findFiles(getPath(Nodes[i]), list, filesMap, ExtensionsMap);
+		findFiles(getPath(Nodes[i]), list, filesMap, ExtensionsMap, dtOpt);
 }
 
 // непосредственно находим файлы в указанной директории
-void ScanFileTreeQT::findFiles(QString Path, QStringList& list, qMapSS& filesMap, qMapSC& ExtensionsMap)
+void ScanFileTreeQT::findFiles(QString Path, QStringList& list, qMapSS& filesMap, qMapSC& ExtensionsMap, const dirTreeOptions &dtOpt)
 {
 	QString nodePath;
+
+	// Set up search options
 	bool includeSub = false;
-	bool includeDir = false;
+	bool includeDir = dtOpt.showDirs;
 
-	list.push_back( Path + nodePath + "?");
+	list.push_back(Path + nodePath + "?");
 
-    for(CScanFolder SF(Path + "*.*", 0); SF; SF++) {
-
+    for(CScanFolder SF(Path + "*.*", 0); SF; SF++)
+	{
 		nodePath = QString::fromWCharArray(SF);
 		int attr;
 
 		// включаем в список файлы в подпапках, если выставлена соответствующая настройка
-		if( pathIsDirectory(Path + nodePath, attr) ) {
+		if( pathIsDirectory(Path + nodePath, attr) )
+		{
+			if (nodePath != "." && nodePath != "..")
+			{
+				if (includeSub)
+				{
+					findFiles(Path + nodePath, list, filesMap, ExtensionsMap, dtOpt);
+				}
 
-			if( includeSub && nodePath != "." && nodePath != ".." )
-				findFiles(Path + nodePath, list, filesMap, ExtensionsMap);
-
-			if( includeDir ) {
-				list.push_back(Path + nodePath);
+				// ??? se later -- also need to be able to sort folders before the files
+				if (includeDir)
+				{
+					list.push_back(nodePath);
+				}
 			}
 		}
-        else {
-
+        else
+		{
 			// включаем в список файлы в текущей папке
 			//if( allowByMask(AnsiString(SF)) )
             {
 				//list.push_back( Path[Path.length()-1] == '\\' ? Path + nodePath : Path + '\\' + nodePath);	// полный путь
 				// в список кладем только имя файла
 				list.push_back( nodePath );
+
 				// в map кладем полный путь
 				QString fullPath = Path[Path.length()-1] == '\\' ? Path + nodePath : Path + '\\' + nodePath;
 				filesMap.insert(fullPath, fullPath);

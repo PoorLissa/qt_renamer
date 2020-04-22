@@ -275,8 +275,8 @@ void qt_002_dirTree::on_listWidgetExtensions_itemSelectionChanged()
 
 	mask.chop(1);
 
-	if( mask != "" ) {
-	
+	if( mask != "" )
+	{
 		if( mask.contains("*.*") )
 			table->applyExtensionFilter(false, mask);
 		else
@@ -289,14 +289,16 @@ void qt_002_dirTree::TreeItemSelectionChanged()
 {
 	QMap<QString, char> ExtensionsMap;
 
-	tree->getFileList(filesList, filesMap, ExtensionsMap);
+	tree->getFileList(filesList, filesMap, ExtensionsMap, dtOptions);
 	table->showFiles(&filesList);
 
 	// отображаем все присутствующие расширения файлов в списке
 	QList<QString> listExt = ExtensionsMap.keys();
 	listExt.prepend("*.*");
 	ui.listWidgetExtensions->clear();
-	for(int i = 0; i < listExt.length(); i++) {
+
+	for(int i = 0; i < listExt.length(); i++)
+	{
 		QListWidgetItem* item = new QListWidgetItem(listExt[i]);
 		ui.listWidgetExtensions->addItem(listExt[i]);
 	}
@@ -336,8 +338,8 @@ void qt_002_dirTree::on_pb_Undo_clicked()
 	table->getCheckedFiles(oldFilesList, newFilesList);
 
 	// проходим по всему мапу и заносим в новый список исходные имена, вытащенные из мапа
-	for (iter = filesMap.begin(); iter != filesMap.end(); ++iter) {
-
+	for (iter = filesMap.begin(); iter != filesMap.end(); ++iter)
+	{
 		int pos = oldFilesList.indexOf(iter.key());
 
 		if( pos >= 0)

@@ -12,6 +12,7 @@
 #include "__FileRenameQT.h"
 #include "__bitSet.h"
 #include "__ini_file.h"
+#include "__helpers.h"
 
 
 
@@ -32,8 +33,12 @@ class qt_002_dirTree : public QMainWindow
 	QMap<QString, QString>	filesMap;		// map для хранения исходных имен файлов
 
 	ini_file				ini;
+	dirTreeOptions			dtOptions;
 
  public slots:
+
+	// There is method called QMetaObject::connectSlotsByName(qt_002_dirTreeClass)
+	// It will automatically connect controls to predefined slots, named accordingly: checkBox --> on_checkBox_clicked(bool)
 	void TreeItemSelectionChanged();
 
 	void on_checkBoxSelAll_clicked(bool);
@@ -43,6 +48,12 @@ class qt_002_dirTree : public QMainWindow
 	void on_pushButtonProcess_clicked();
 	void on_reReadPushButton_clicked();
 	void on_pb_Undo_clicked();
+
+	void on_cb_dirs_clicked(bool state)
+	{
+		dtOptions.showDirs = state;
+		on_reReadPushButton_clicked();
+	}
 };
 
 #endif // QT_002_DIRTREE_H

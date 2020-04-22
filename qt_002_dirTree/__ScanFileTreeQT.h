@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ___SCANFILETREEQT_H
 #define ___SCANFILETREEQT_H
 
@@ -11,6 +12,7 @@
 #include <QTableWidgetItem>
 
 #include "__ScanFolder.h"
+#include "__helpers.h"
 
 typedef QMap<QString, QString>	qMapSS;
 typedef QMap<QString, char>		qMapSC;
@@ -31,7 +33,7 @@ class ScanFileTreeQT : public QObject {
 	QString getCurrNodeName();
 
 	// получаем список файлов (QStringList), находящихся под выделенной директорией/директориями
-	void getFileList(QStringList&, qMapSS&, qMapSC&);
+	void getFileList(QStringList&, qMapSS&, qMapSC&, const dirTreeOptions &);
 
 	// перестроить дерево для отмеченной папки / папок
 	void reReadSelectedDir();
@@ -56,14 +58,14 @@ class ScanFileTreeQT : public QObject {
 	void init();
 	void ScanHardDrives();
 	void BuildTree(QTreeWidgetItem*, const QString, const QString);
-	bool pathIsDirectory(QString, int&);
-	void findFiles(QString, QStringList&, qMapSS&, qMapSC&);
+	bool pathIsDirectory(QString, int &);
+	void findFiles(QString, QStringList &, qMapSS &, qMapSC &, const dirTreeOptions &dtOpt);
 
 	// Получить полный путь к каталогу, адресуемому нодой
 	QString getPath(QTreeWidgetItem*);
 
 	// Сохранить и прочитать из файла последний использованный путь к папке дерева
-	void lastPathToFile();
+	void	lastPathToFile();
 	QString lastPathFromFile();
 
 	// открыть в дереве папку по заданному пути (или максимально к ней близкую, если такой папки уже не существует)
