@@ -208,8 +208,8 @@ void qt_002_dirTree::on_pushButtonProcess_clicked()
 		}
 
 		// insert substring
-		if( opt(21) ) {
-
+		if( opt(21) )
+		{
 			if( ui.rb_004->isChecked() )
 				// insert substring at given position
 				Renamer.insertAt(ui.lineEdit_07->text(), ui.spinBox_05->value(), opt(22));
@@ -222,8 +222,8 @@ void qt_002_dirTree::on_pushButtonProcess_clicked()
 		}
 
 		// rename using date/time attributes of the files
-		if( opt(24) ) {
-		
+		if( opt(24) )
+		{
 			int btn = -1;
 			if( ui.rb_001->isChecked() )
 				btn = 1;
@@ -236,27 +236,35 @@ void qt_002_dirTree::on_pushButtonProcess_clicked()
 		}
 
 		// rename mp3's using mp3 tags
-		if( opt(26) ) {
-		
+		if( opt(26) )
+		{
 			Renamer.mp3Tag();
 		}
 
-		if( opt(28) ) {
-		
+		if( opt(28) )
+		{
 			Renamer.renByTemplate(ui.lineEdit_11->text(), ui.spinBox_08->value());
 		}
 
-		// запускаем фактическое переименование или просто отображаем файлы в таблице
-		if( doRename ) {
+		if (opt(29))
+		{
+			bool fromEnd1 = ui.cb_29_1->isChecked();
+			bool fromEnd2 = ui.cb_29_2->isChecked();
 
+			Renamer.moveFromPosToPos(ui.spinBox_29_1->value(), ui.spinBox_29_2->value(), ui.spinBox_29_3->value(), fromEnd1, fromEnd2);
+		}
+
+		// запускаем фактическое переименование или просто отображаем файлы в таблице
+		if( doRename )
+		{
 			int errCount = Renamer.Rename();
 			table->displayRenamedFiles(newFilesList, oldFilesList);
 
 			if (errCount)
 				QMessageBox::information(ui.centralWidget, "Ahtung!", QString::number(errCount) + "files were NOT renamed :'(");
 		}
-		else {
-
+		else
+		{
 			table->displayRenamedFiles(newFilesList, newFilesList);
 		}
 

@@ -638,8 +638,8 @@ void FileRenameQT::renByTemplate(const QString mask, const int startingNo)
 		int     offset;
 		bool	Error = false;
 
-		for(int i = 0; i < Mask.length(); i++) {
-
+		for(int i = 0; i < Mask.length(); i++)
+		{
 			offset = 0;
 			ch = Mask[i];
 
@@ -702,6 +702,33 @@ void FileRenameQT::renByTemplate(const QString mask, const int startingNo)
 
 		if( !Error )
 			(*newFiles)[fileNo] = Mask + ext;
+	}
+}
+// -----------------------------------------------------------------------------------------------------------------------
+
+// Переместить n символов из позиции pos1 в pos2
+void FileRenameQT::moveFromPosToPos(const int n, int pos1, int pos2, bool fromEnd1, bool fromEnd2)
+{
+	LoopFiles
+	{
+		QString str = getFileName((*newFiles)[fileNo]);
+		QString ext = getFileExt ((*newFiles)[fileNo]);
+
+		int origLen = str.length();
+
+		int p1 = fromEnd1 ? origLen - pos1 - n : pos1;
+		int p2 = fromEnd2 ? origLen - pos2 - 0 : pos2;
+
+		QString sub = str.mid(p1, n);
+
+		str.insert(p2, sub);
+
+		if (p2 < p1)
+			p1 = p1 + n;
+
+		str.remove(p1, n);
+
+		(*newFiles)[fileNo] = str + ext;
 	}
 }
 // -----------------------------------------------------------------------------------------------------------------------

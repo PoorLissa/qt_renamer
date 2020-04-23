@@ -40,6 +40,7 @@ class FileRenameQT {
 		void insertAttrDate(QString, int, int, bool);									// вставить в им€ файла дату создани€/записи/доступа/изменени€
 		void mp3Tag();																	// поименовать mp3-файл из его тегов ID3v1
 		void renByTemplate(const QString, const int = 0);								// переименовать, использу€ шаблон: * замен€етс€ на исходное им€ файла, # замен€етс€ на пор€дковый номер
+		void moveFromPosToPos(const int, int, int, bool, bool);							// ѕереместить n символов из позиции pos1 в pos2
 
 	private:
 

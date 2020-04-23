@@ -236,7 +236,7 @@
              <item>
               <widget class="QTabWidget" name="tabWidget">
                <property name="currentIndex">
-                <number>0</number>
+                <number>3</number>
                </property>
                <widget class="QWidget" name="tab_4">
                 <attribute name="title">
@@ -1172,6 +1172,101 @@
                  </property>
                  <property name="text">
                   <string>Last access</string>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_29_1">
+                 <property name="geometry">
+                  <rect>
+                   <x>87</x>
+                   <y>141</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb29">
+                 <property name="geometry">
+                  <rect>
+                   <x>31</x>
+                   <y>142</y>
+                   <width>50</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Move</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_29_1">
+                 <property name="geometry">
+                  <rect>
+                   <x>134</x>
+                   <y>141</y>
+                   <width>83</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>symbols from pos</string>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_29_2">
+                 <property name="geometry">
+                  <rect>
+                   <x>223</x>
+                   <y>141</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_29_2">
+                 <property name="geometry">
+                  <rect>
+                   <x>273</x>
+                   <y>141</y>
+                   <width>31</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>to pos</string>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="spinBox_29_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>314</x>
+                   <y>141</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb_29_1">
+                 <property name="geometry">
+                  <rect>
+                   <x>229</x>
+                   <y>164</y>
+                   <width>63</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>from end</string>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb_29_2">
+                 <property name="geometry">
+                  <rect>
+                   <x>320</x>
+                   <y>164</y>
+                   <width>63</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>from end</string>
                  </property>
                 </widget>
                </widget>
