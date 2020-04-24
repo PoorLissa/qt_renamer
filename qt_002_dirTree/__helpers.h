@@ -6,12 +6,13 @@
 
 struct dirTreeOptions
 {
-	dirTreeOptions() : showDirs(false)
+	dirTreeOptions() : showDirs(false), showFiles(true)
 	{
 		;
 	}
 
 	bool showDirs;
+	bool showFiles;
 };
 
 void convert_from_MultiByte_to_WideChar(std::wstring &, const char *);

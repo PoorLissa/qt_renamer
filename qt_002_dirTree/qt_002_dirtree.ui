@@ -255,10 +255,26 @@
                   <string>Include Directories</string>
                  </property>
                 </widget>
+                <widget class="QCheckBox" name="cb_files">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>50</y>
+                   <width>90</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Include Files</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </widget>
                <widget class="QWidget" name="tab">
                 <attribute name="title">
-                 <string>Rules 1</string>
+                 <string>Recipes 1</string>
                 </attribute>
                 <widget class="QWidget" name="layoutWidget">
                  <property name="geometry">
@@ -352,7 +368,7 @@
                </widget>
                <widget class="QWidget" name="tab_2">
                 <attribute name="title">
-                 <string>Rules 2</string>
+                 <string>Recipes 2</string>
                 </attribute>
                 <widget class="QCheckBox" name="cb10">
                  <property name="geometry">
@@ -1016,7 +1032,7 @@
                </widget>
                <widget class="QWidget" name="tab_3">
                 <attribute name="title">
-                 <string>Rules 3</string>
+                 <string>Recipes 3</string>
                 </attribute>
                 <widget class="QCheckBox" name="cb26">
                  <property name="geometry">
@@ -1177,8 +1193,8 @@
                 <widget class="QSpinBox" name="spinBox_29_1">
                  <property name="geometry">
                   <rect>
-                   <x>87</x>
-                   <y>141</y>
+                   <x>52</x>
+                   <y>135</y>
                    <width>41</width>
                    <height>20</height>
                   </rect>
@@ -1187,8 +1203,8 @@
                 <widget class="QCheckBox" name="cb29">
                  <property name="geometry">
                   <rect>
-                   <x>31</x>
-                   <y>142</y>
+                   <x>2</x>
+                   <y>136</y>
                    <width>50</width>
                    <height>18</height>
                   </rect>
@@ -1200,8 +1216,8 @@
                 <widget class="QLabel" name="label_29_1">
                  <property name="geometry">
                   <rect>
-                   <x>134</x>
-                   <y>141</y>
+                   <x>98</x>
+                   <y>135</y>
                    <width>83</width>
                    <height>16</height>
                   </rect>
@@ -1213,8 +1229,8 @@
                 <widget class="QSpinBox" name="spinBox_29_2">
                  <property name="geometry">
                   <rect>
-                   <x>223</x>
-                   <y>141</y>
+                   <x>188</x>
+                   <y>135</y>
                    <width>41</width>
                    <height>20</height>
                   </rect>
@@ -1223,9 +1239,9 @@
                 <widget class="QLabel" name="label_29_2">
                  <property name="geometry">
                   <rect>
-                   <x>273</x>
-                   <y>141</y>
-                   <width>31</width>
+                   <x>298</x>
+                   <y>135</y>
+                   <width>30</width>
                    <height>16</height>
                   </rect>
                  </property>
@@ -1236,8 +1252,8 @@
                 <widget class="QSpinBox" name="spinBox_29_3">
                  <property name="geometry">
                   <rect>
-                   <x>314</x>
-                   <y>141</y>
+                   <x>336</x>
+                   <y>135</y>
                    <width>41</width>
                    <height>20</height>
                   </rect>
@@ -1246,9 +1262,9 @@
                 <widget class="QCheckBox" name="cb_29_1">
                  <property name="geometry">
                   <rect>
-                   <x>229</x>
-                   <y>164</y>
-                   <width>63</width>
+                   <x>232</x>
+                   <y>142</y>
+                   <width>67</width>
                    <height>18</height>
                   </rect>
                  </property>
@@ -1259,14 +1275,63 @@
                 <widget class="QCheckBox" name="cb_29_2">
                  <property name="geometry">
                   <rect>
-                   <x>320</x>
-                   <y>164</y>
-                   <width>63</width>
+                   <x>380</x>
+                   <y>142</y>
+                   <width>67</width>
                    <height>18</height>
                   </rect>
                  </property>
                  <property name="text">
                   <string>from end</string>
+                 </property>
+                </widget>
+                <widget class="Line" name="line">
+                 <property name="geometry">
+                  <rect>
+                   <x>3</x>
+                   <y>117</y>
+                   <width>520</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+                <widget class="Line" name="line_2">
+                 <property name="geometry">
+                  <rect>
+                   <x>3</x>
+                   <y>160</y>
+                   <width>520</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="cb30">
+                 <property name="geometry">
+                  <rect>
+                   <x>2</x>
+                   <y>179</y>
+                   <width>250</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Swap right and left parts, where the delimiter is</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit_30">
+                 <property name="geometry">
+                  <rect>
+                   <x>256</x>
+                   <y>178</y>
+                   <width>66</width>
+                   <height>20</height>
+                  </rect>
                  </property>
                 </widget>
                </widget>

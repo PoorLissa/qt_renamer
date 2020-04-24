@@ -6,6 +6,7 @@
 #include <QListWidgetItem>
 
 class FileListManage : public QObject {
+
 	Q_OBJECT
 
  public:

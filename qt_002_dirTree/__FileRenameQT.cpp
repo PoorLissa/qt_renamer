@@ -730,6 +730,33 @@ void FileRenameQT::moveFromPosToPos(const int n, int pos1, int pos2, bool fromEn
 
 		(*newFiles)[fileNo] = str + ext;
 	}
+
+	return;
+}
+// -----------------------------------------------------------------------------------------------------------------------
+
+// Поменять местами 2 части имени файла, разделенные делимитером
+void FileRenameQT::swap_Left_and_Right(const QString delim)
+{
+	LoopFiles
+	{
+		QString str = getFileName((*newFiles)[fileNo]);
+		QString ext = getFileExt ((*newFiles)[fileNo]);
+
+		int pos = str.indexOf(delim);
+
+		if (pos > 0)
+		{
+			QString tmp = str.mid(pos + delim.length());
+			tmp += delim;
+			tmp += str.mid(0, pos);
+			str = tmp;
+		}
+
+		(*newFiles)[fileNo] = str + ext;
+	}
+
+	return;
 }
 // -----------------------------------------------------------------------------------------------------------------------
 

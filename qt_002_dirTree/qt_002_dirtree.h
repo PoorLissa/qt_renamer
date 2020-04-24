@@ -54,6 +54,12 @@ class qt_002_dirTree : public QMainWindow
 		dtOptions.showDirs = state;
 		on_reReadPushButton_clicked();
 	}
+
+	void on_cb_files_clicked(bool state)
+	{
+		dtOptions.showFiles = state;
+		on_reReadPushButton_clicked();
+	}
 };
 
 #endif // QT_002_DIRTREE_H

@@ -88,13 +88,15 @@ qt_002_dirTree::qt_002_dirTree(QString path, QWidget *parent) : QMainWindow(pare
 		"\tPos is a position number in the file name, starting at 1\n"
 	);
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
+// Destructor
 qt_002_dirTree::~qt_002_dirTree()
 {
 	delete tree;
 	delete table;
 }
-// --------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------
 
 // переименовываем выбранные файлы
 void qt_002_dirTree::on_pushButtonProcess_clicked()
@@ -254,6 +256,16 @@ void qt_002_dirTree::on_pushButtonProcess_clicked()
 			Renamer.moveFromPosToPos(ui.spinBox_29_1->value(), ui.spinBox_29_2->value(), ui.spinBox_29_3->value(), fromEnd1, fromEnd2);
 		}
 
+		if (opt(30))
+		{
+			QString delim = ui.lineEdit_30->text();
+
+			if (delim.length())
+				Renamer.swap_Left_and_Right(delim);
+		}
+
+		// ---------------------------------------------------------------------------------------------
+
 		// запускаем фактическое переименование или просто отображаем файлы в таблице
 		if( doRename )
 		{
@@ -262,14 +274,19 @@ void qt_002_dirTree::on_pushButtonProcess_clicked()
 
 			if (errCount)
 				QMessageBox::information(ui.centralWidget, "Ahtung!", QString::number(errCount) + "files were NOT renamed :'(");
+
+			// ??? does it cause problems? this is new, to reread subdirs (just in case, if they were renamed)
+			tree->reReadSelectedDir(false);
 		}
 		else
 		{
 			table->displayRenamedFiles(newFilesList, newFilesList);
 		}
-
 	}
+
+	return;
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // отслеживаем изменение выделения в listWidgetExtensions и применяем выбранную маску к файлам в таблице
 void qt_002_dirTree::on_listWidgetExtensions_itemSelectionChanged()
@@ -291,6 +308,7 @@ void qt_002_dirTree::on_listWidgetExtensions_itemSelectionChanged()
 			table->applyExtensionFilter(true, mask);
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // когда меняется отмеченная папка в дереве, перестраиваем список файлов в таблице
 void qt_002_dirTree::TreeItemSelectionChanged()
@@ -315,12 +333,13 @@ void qt_002_dirTree::TreeItemSelectionChanged()
 	ui.checkBoxSelAll->setChecked(false);
 	ui.pushButtonProcess->setEnabled(false);
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // клик по кнопке "Перечитать директорию"
 void qt_002_dirTree::on_reReadPushButton_clicked()
 {
 	ui.reReadPushButton->setEnabled(false);
-	tree->reReadSelectedDir();
+	tree->reReadSelectedDir(true);
 
 	// ??? хотим сделать сортировку, возможно нужно использовать map
 	//filesList.sort();

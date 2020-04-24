@@ -41,6 +41,7 @@ class FileRenameQT {
 		void mp3Tag();																	// поименовать mp3-файл из его тегов ID3v1
 		void renByTemplate(const QString, const int = 0);								// переименовать, используя шаблон: * заменяется на исходное имя файла, # заменяется на порядковый номер
 		void moveFromPosToPos(const int, int, int, bool, bool);							// Переместить n символов из позиции pos1 в pos2
+		void swap_Left_and_Right(const QString);										// Поменять местами 2 части имени файла, разделенные делимитером
 
 	private:
 

@@ -36,7 +36,7 @@ class ScanFileTreeQT : public QObject {
 	void getFileList(QStringList&, qMapSS&, qMapSC&, const dirTreeOptions &);
 
 	// перестроить дерево для отмеченной папки / папок
-	void reReadSelectedDir();
+	void reReadSelectedDir(bool);
 
 	// sort function; use it with the 'TreeView1Compare()' event
 	//int NodeCompare(TTreeNode*, TTreeNode*);

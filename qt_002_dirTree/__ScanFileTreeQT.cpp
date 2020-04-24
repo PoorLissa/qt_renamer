@@ -109,7 +109,7 @@ void ScanFileTreeQT::init()
 	(*hiddenDirIcon).addPixmap(disabledPixmap, QIcon::Disabled, QIcon::On);
 }
 
-// находим все существующие жетские диски и строим первый уровень дерева файлов
+// находим все существующие жесткие диски и строим первый уровень дерева файлов
 void ScanFileTreeQT::ScanHardDrives()
 {
 	Tree->clear();
@@ -306,12 +306,15 @@ QString ScanFileTreeQT::getPath(QTreeWidgetItem *Node)
 
 	return Path;
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
+// 
 QString ScanFileTreeQT::getCurrNodeName()
 {
 	QTreeWidgetItem *currentNode = Tree->selectedItems()[0];
 	return getPath(currentNode);
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // заполняем предоставленный список файлами, находящимися в выбранных директориях
 void ScanFileTreeQT::getFileList(QStringList& list, qMapSS& filesMap, qMapSC& ExtensionsMap, const dirTreeOptions &dtOpt)
@@ -325,6 +328,7 @@ void ScanFileTreeQT::getFileList(QStringList& list, qMapSS& filesMap, qMapSC& Ex
 	for(int i = 0; i < Nodes.length(); i++)
 		findFiles(getPath(Nodes[i]), list, filesMap, ExtensionsMap, dtOpt);
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // непосредственно находим файлы в указанной директории
 void ScanFileTreeQT::findFiles(QString Path, QStringList& list, qMapSS& filesMap, qMapSC& ExtensionsMap, const dirTreeOptions &dtOpt)
@@ -332,13 +336,15 @@ void ScanFileTreeQT::findFiles(QString Path, QStringList& list, qMapSS& filesMap
 	QString nodePath;
 
 	// Set up search options
-	bool includeSub = false;
-	bool includeDir = dtOpt.showDirs;
+	bool includeSub   = false;
+	bool includeDir   = dtOpt.showDirs;
+	bool includeFiles = dtOpt.showFiles;
 
 	list.push_back(Path + nodePath + "?");
 
     for(CScanFolder SF(Path + "*.*", 0); SF; SF++)
 	{
+		QString fullPath, ext;
 		nodePath = QString::fromWCharArray(SF);
 		int attr;
 
@@ -356,6 +362,10 @@ void ScanFileTreeQT::findFiles(QString Path, QStringList& list, qMapSS& filesMap
 				if (includeDir)
 				{
 					list.push_back(nodePath);
+
+					// в map кладем полный путь к папке
+					fullPath = Path[Path.length() - 1] == '\\' ? Path + nodePath : Path + '\\' + nodePath;
+					filesMap.insert(fullPath, fullPath);
 				}
 			}
 		}
@@ -363,17 +373,17 @@ void ScanFileTreeQT::findFiles(QString Path, QStringList& list, qMapSS& filesMap
 		{
 			// включаем в список файлы в текущей папке
 			//if( allowByMask(AnsiString(SF)) )
+			if (includeFiles)
             {
-				//list.push_back( Path[Path.length()-1] == '\\' ? Path + nodePath : Path + '\\' + nodePath);	// полный путь
 				// в список кладем только имя файла
-				list.push_back( nodePath );
+				list.push_back(nodePath);
 
-				// в map кладем полный путь
-				QString fullPath = Path[Path.length()-1] == '\\' ? Path + nodePath : Path + '\\' + nodePath;
+				// в map кладем полный путь в файлу...
+				fullPath = Path[Path.length()-1] == '\\' ? Path + nodePath : Path + '\\' + nodePath;
 				filesMap.insert(fullPath, fullPath);
 
-				QString ext = nodePath.right(nodePath.length() - nodePath.lastIndexOf('.'));
-
+				// ... и расширение
+				ext = nodePath.right(nodePath.length() - nodePath.lastIndexOf('.'));
 				ExtensionsMap.insert(ext, '.');
 			}
 		}
@@ -381,7 +391,9 @@ void ScanFileTreeQT::findFiles(QString Path, QStringList& list, qMapSS& filesMap
 
 	return;
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
+//
 void ScanFileTreeQT::lastPathToFile()
 {
 	QList<QTreeWidgetItem*> currentNodeList = Tree->selectedItems();
@@ -400,7 +412,9 @@ void ScanFileTreeQT::lastPathToFile()
 		outFile.close();
 	}
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
+//
 QString ScanFileTreeQT::lastPathFromFile()
 {
 	QString path = "";
@@ -412,7 +426,8 @@ QString ScanFileTreeQT::lastPathFromFile()
 
 	if (inFile.is_open())
 	{
-		while (inFile >> ch) {
+		while (inFile >> ch)
+		{
 			path += ch;
 			path += " ";	// wtf? но без этой строчки из пути исчезают все пробелы...
 		}
@@ -423,7 +438,9 @@ QString ScanFileTreeQT::lastPathFromFile()
 
     return path;
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
+//
 void ScanFileTreeQT::setLastDirectory(QString path)
 {
 	if (path.isEmpty())
@@ -431,6 +448,7 @@ void ScanFileTreeQT::setLastDirectory(QString path)
 	else
 		setDirectory(path);
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
 // открываем в дереве последнюю папку из прошлой сессии
 void ScanFileTreeQT::setDirectory(QString path)
@@ -467,15 +485,16 @@ void ScanFileTreeQT::setDirectory(QString path)
 
 	return;
 }
+// -----------------------------------------------------------------------------------------------------------------------
 
-// перечитаем все отмеченные директории (вызываем этот метод по внешнему событию, например, по кнопке)
-// чтобы перечитать файлы в этих директориях, нужно в том же самом событии после этого метода вызвать getFileList(filesList);
-void ScanFileTreeQT::reReadSelectedDir()
+// Перечитаем все отмеченные директории (вызываем этот метод по внешнему событию, например, по кнопке).
+// Чтобы перечитать файлы в этих директориях, нужно в том же самом событии после этого метода вызвать getFileList(filesList);
+void ScanFileTreeQT::reReadSelectedDir(bool doSendSignal)
 {
 	QList<QTreeWidgetItem*> selected = Tree->selectedItems();
 
-	for(int i = 0; i < selected.length(); i++) {
-
+	for(int i = 0; i < selected.length(); i++)
+	{
 		QTreeWidgetItem *item = selected[i];
 		QString path = getPath(item);
 
@@ -490,6 +509,10 @@ void ScanFileTreeQT::reReadSelectedDir()
 			item->setExpanded(true);
 
 		// посылаем сигнал о том, что изменилось выделение в дереве, чтобы перечитать файлы в папке
-		Tree->itemSelectionChanged();
+		if (doSendSignal)
+			Tree->itemSelectionChanged();
 	}
+
+	return;
 }
+// -----------------------------------------------------------------------------------------------------------------------
