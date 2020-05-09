@@ -64,9 +64,6 @@ qt_002_dirTree::qt_002_dirTree(QString path, QWidget *parent) : QMainWindow(pare
 	ui.cb0->setGeometry(QRect(5, 5, 20, 20));
 
 	// проставим плейсхолдеры для полей
-	ui.lineEdit_07->setPlaceholderText("String to insert");
-	ui.lineEdit_09->setPlaceholderText("Any Substring");
-	ui.lineEdit_10->setPlaceholderText("Mask to match");
 	ui.lineEdit_10->setToolTip("Your text will be inserted at the position\nthat matches with the given mask, where\n"\
 		"%d or %D = any digit\n"\
 		"%b or %B = any small (block) letter\n"\
@@ -77,7 +74,6 @@ qt_002_dirTree::qt_002_dirTree(QString path, QWidget *parent) : QMainWindow(pare
 		"The whole mask might look like this:\n"\
 		"%d%d - %a%s_?"
 	);
-	ui.lineEdit_11->setPlaceholderText("Template [### - *]");
 	ui.lineEdit_11->setToolTip("The file will be renamed using your template, where\n"\
 		"* = initial file name\n"\
 		"### = generated number starting with the number in the SpinBox field, where\n"\
